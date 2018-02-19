@@ -1,0 +1,23 @@
+.rounder-reset {
+    border-radius: 0px !important;
+}
+
+.ui-field-contain {
+    border: none!important;
+}
+
+.ui-page{
+    background-color: #30626f!important;
+}
+
+.ui-header{
+    background-color: #0f5665 !important;
+    color: #fff!important;
+    text-shadow: none!important;
+    border-bottom-color: #1b1b1b!important;
+}
+
+
+body{
+    background-color: #30626f!important;
+}

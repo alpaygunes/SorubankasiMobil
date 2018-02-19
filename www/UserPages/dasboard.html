@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HaydiSor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/jquery.mobile-1.4.5.css" />
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/jquery-1.7.1.min.js"></script>
+    <script src="../js/jquery.mobile-1.4.5.js"></script>
+    <script src="../js/index.js"></script>
+</head>
+<body>
+
+    <div data-role="page">
+
+        <div data-role="header"  data-position="fixed">
+            <a href="#solpanel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext">Menü</a>
+            <h1>HaydiSor.com</h1>
+        </div>
+        <div data-role="content" id="container">
+
+            <!-- ----------------      SOL MENÜ       ------------------------------ -->
+            <div data-role="panel" id="solpanel" data-position="left" data-display="overlay" data-theme="a" class="ui-panel ui-panel-position-left ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-open">
+                <div class="profil-resmi">
+                    <img id ="presim" src="">
+                </div>
+
+                <div class="ui-panel-inner sol-menu">
+                    <a href="#" class="ui-btn ui-icon-gear ui-btn-icon-left">Profilim</a>
+                    <a href="#" class="ui-btn ui-icon-action ui-btn-icon-left" id="logout">Çıkış</a>
+                </div>
+                <!-- ----------------     / SOL MENÜ       ------------------------------ -->
+            </div>
+
+
+            <!-- ----------------      BÜYÜK DÜĞMELER       ------------------------------ -->
+            <div class="buyuk-dugme" id="ag-buyuk-btn-soru-coz">
+                <div class="buyuk-dugme-lbl">Soru Çöz</div>
+            </div>
+            <div class="buyuk-dugme" id="ag-buyuk-btn-varliklarim">
+                <div class="buyuk-dugme-lbl">Varlıklarım</div>
+            </div>
+            <div class="buyuk-dugme" id="ag-buyuk-btn-duello">
+                <div class="buyuk-dugme-lbl">Duello</div>
+            </div>
+            <div class="buyuk-dugme" id="ag-buyuk-btn-arkadaslarim">
+                <div class="buyuk-dugme-lbl">Arkdaşlarım</div>
+            </div>
+            <!-- ----------------     / BÜYÜK DÜĞMELER       ------------------------------ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+    </div>
+</body>
+</html>
+
+<script language="JavaScript">
+
+    $(function() {
+        $('#presim').attr('src',SITE_URL+"images/noimage.png");
+
+        $.ajax({
+            type:"GET",
+            url: SITE_URL+"mobil/profil",
+            success: function(data) {
+                var userId = window.localStorage.getItem("userId");
+                if(data['id']!=undefined){
+                    $('#presim').attr('src',SITE_URL + "images/profilresimleri/" + userId + ".png");
+                }
+            },
+            error: function(xhr, status, error) {
+                alert(xhr.status+status+error);
+            }
+        });
+
+        $(document).on('click','#logout',function () {
+            $.ajax({
+                type:"GET",
+                url: SITE_URL+"mobil/logout",
+                success: function(data) {
+                    window.localStorage.clear();
+                    window.location.href = "/";
+                },
+                error: function(xhr, status, error) {
+                    alert(xhr.status+status+error);
+                }
+            });
+        })
+    })
+
+
+</script>
+
+<style>
+    .buyuk-dugme{
+        display: block;
+        width: 150px;
+        height: 125px;
+        position: relative;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+    }
+    
+    #ag-buyuk-btn-soru-coz{
+        background-image: url("../img/bt-soru-coz.png");
+    }
+    #ag-buyuk-btn-varliklarim{
+        background-image: url("../img/bt-varliklarim.png");
+    }
+    #ag-buyuk-btn-duello{
+        background-image: url("../img/bt-duello.png");
+    }
+    #ag-buyuk-btn-arkadaslarim{
+        background-image: url("../img/bt-arkadaslarim.png");
+    }
+
+    .buyuk-dugme-lbl{
+        width: 100%;
+        position: relative;
+        text-align: center;
+        text-shadow: 1px 1px 1px #000  !important;
+        color: #fff;
+        font-weight: bold;
+        top:100%;
+        font-size:18px;
+    }
+
+    .sol-menu{
+        padding: 0px;
+        overflow: hidden;
+    }
+    .sol-menu .ui-btn{
+        width: 85%!important;
+        margin: 0px!important;
+        background-color: transparent!important;
+    }
+    .sol-menu .ui-btn{
+        padding-left: 3em !important;
+        text-align: left;
+        border-top: none;
+    }
+
+    .sol-menu .ui-btn:first-child{
+        border-top: 1px solid #ccc;
+    }
+
+
+
+    #solpanel .profil-resmi{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 175px;
+        border: 1px solid #ccc;
+        margin: 20px;
+        text-align:center;
+        padding: 10px;
+    }
+
+    #presim{
+        width: 175px;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+

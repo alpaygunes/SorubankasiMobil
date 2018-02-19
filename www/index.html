@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HaydiSor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+
+    <div data-role="page">
+        <div data-role="header" data-theme="a">
+            <h1>HaydiSor.com</h1>
+        </div>
+        <div data-role="content" id="container">
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+    // aktif kullanıcıyı oturum açmış mı ?
+    $.ajax({
+        type:"POST",
+        url: SITE_URL+"mobil/oturumAcikmi",
+        crossDomain: true,
+        cache: false,
+        success: function(data) {
+            if(data!="null"){
+                window.localStorage.setItem("userId",data['id']);
+            }
+        },
+        error: function(xhr, status, error) {
+            alert(xhr.status+status+error);
+        }
+    });
+
+</script>
+
+

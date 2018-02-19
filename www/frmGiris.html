@@ -1,0 +1,84 @@
+<! --- ----------------------------------  GİRİŞ FORMU ------------------------------------- -- >
+<div class="giris-fromu ui-corner-all custom-corners">
+    <div class="ui-bar ui-bar-a">
+        <h3>Giriş</h3>
+    </div>
+
+    <div class="ui-body ui-body-a">
+        <form id="frmLogin" target="_self" action="#">
+
+            <div class="ui-field-contain">
+                <label for="email">Eposta</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                    <input type="email" name="email" id="email" placeholder="Epostanızı yazın" required>
+                </div>
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="parola">Parola</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                    <input type="password" name="password" id="password" value="" minlength="6" required>
+                </div>
+            </div>
+
+            <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+                <button type="submit" class="ui-btn ui-icon-check ui-btn-icon-left " id="giris" >Giriş</button>
+            </div>
+
+            <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+                <label for="parola">Beni hatırla</label>
+                <input type="checkbox" name="remember">
+            </div>
+
+            <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+                <a href="#" id="uyelik-formunu-ac">Hesap oluştur</a>  |
+                <a href="#" id="hatirlatma-formunu-ac">Şifremi unuttum</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+
+
+<style>
+
+</style>
+
+<script type="text/javascript">
+
+    $(function() {
+        $(document).on('click','#uyelik-formunu-ac',function () {
+            $( "#container" ).load( "frmUyelik.html" );
+        })
+
+        $(document).on('click','#hatirlatma-formunu-ac',function () {
+            $( "#container" ).load( "frmSifremiUnuttum.html" );
+        })
+    });
+
+
+    $(document).on('submit','#frmLogin',function () {
+        var form = $(this)
+        var email           = $('#email').val();
+        var password         = $('#password').val();
+        $.ajax({
+            type:"POST",
+            url: SITE_URL+"mobil/dogrula",
+            data:$(this).serialize(),
+            crossDomain: true,
+            cache: false,
+            success: function(data) {
+                if(data!="0"){
+                    window.localStorage.setItem("userId",data['id']);
+                    window.location.href = "UserPages/dasboard.html";
+                }
+            },
+            error: function(xhr, status, error) {
+                alert(xhr.status+status+error);
+            }
+        });
+        return false;
+    })
+</script>

@@ -1,0 +1,46 @@
+<! --- ----------------------------------  ŞFRE HATIRLATMA FORMU ------------------------------------- -- >
+<div class="giris-fromu ui-corner-all custom-corners">
+    <div class="ui-bar ui-bar-a">
+        <h3>Parolamı unuttum</h3>
+    </div>
+
+    <div class="ui-body ui-body-a">
+        <form id="frmSifremiUnuttum" target="_self" action="#">
+
+            <div class="ui-field-contain">
+                <label for="email">Eposta</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                    <input type="email" name="email" id="email" placeholder="Epostanızı yazın" required>
+                </div>
+            </div>
+
+            <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+                <button type="submit" class="ui-btn ui-icon-check ui-btn-icon-left" id="giris" >Tamam</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    $(function() {
+        $(document).on('click','#giris',function () {
+            $('#submit').trigger('click');
+        });
+    });
+
+
+    $(document).on('submit','#frmSifremiUnuttum',function () {
+        var email           = $('#email').val();
+        $.ajax({
+            url: SITE_URL + "mobil/sifremiUnuttum",
+            success: function(data) {
+                console.log(data);
+            }
+        });
+        return false;
+    })
+</script>

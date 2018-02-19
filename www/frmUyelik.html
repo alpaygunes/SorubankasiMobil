@@ -1,0 +1,95 @@
+<! --- ----------------------------------  ÜYELİK FORMU ------------------------------------- -- >
+<div class="giris-fromu ui-corner-all custom-corners">
+    <div class="ui-bar ui-bar-a">
+        <h3>Yeni üyelik</h3>
+    </div>
+
+    <div class="ui-body ui-body-a">
+        <form id="frmUyelik" target="_self" action="#">
+
+            <div class="ui-field-contain">
+                <label for="name">Adınız</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                    <input type="text" name="name" id="name" placeholder="Adınız ve Soyadınız" required>
+                </div>
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="email">Eposta</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                    <input type="email" name="email" id="email" placeholder="Epostanızı yazın" required>
+                </div>
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="parola">Parola</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                    <input type="password"  class="pswrd" name="password" id="password" value="" minlength="6" required>
+                </div>
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="password-confirm">Tekrar parola</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                    <input type="password" class="pswrd" name="password-confirm" id="password-confirm" value="" minlength="6" required>
+                </div>
+                <div id="eslesme" style="display: none">Parolalar uyuşmuyor. Kontrol ediniz</div>
+            </div>
+
+            <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+                <button type="submit" class="ui-btn ui-icon-check ui-btn-icon-left" id="giris" >Kaydet</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<style>
+    .giris-fromu{
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        max-width: 500px!important;
+        margin-top:10%;
+    }
+</style>
+
+<script type="text/javascript">
+    var $parolalar_ayni = true;
+    $(function() {
+        $(document).on('click','#kaydet',function () {
+            $('#submit').trigger('click');
+        });
+
+        $(document).on('keyup','.pswrd',function () {
+            if($('#password').val() != $('#password-confirm').val()){
+                $('#eslesme').show();
+                $parolalar_ayni = false;
+            }else{
+                $('#eslesme').hide();
+                $parolalar_ayni = true;
+            }
+        });
+    });
+
+    $(document).on('submit','#frmUyelik',function () {
+        if(!$parolalar_ayni){
+            alert("Parolalar eşleşmiyor.");
+        }
+        $.ajax({
+            type:"POST",
+            url: SITE_URL+"mobil/hesapOlustur",
+            data:$(this).serialize(),
+            success: function(data) {
+                if(data['id']!="undefined"){
+                    window.location.href = "UserPages/dasboard.html";
+                }
+            },
+            error: function(xhr, status, error) {
+                alert(xhr.status+status+error);
+            }
+        });
+        return false;
+    })
+</script>
